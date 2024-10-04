@@ -1,7 +1,19 @@
 {
   "compilerOptions": {
+    "baseUrl": "src/",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["*"],
+      "@/utils/*": ["utils/*"],
+      "@/lib/*": ["lib/*"],
+      "@/components/*": ["components/*"],
+      "@/constants/*": ["constants/*"],
+      "@/common/*": ["common/*"],
+      "@/app/*": ["app/*"],
+      "@/services/*": ["services/*"],
+      "@/hooks/*": ["hooks/*"],
+      "@/public/*": ["./public/*"],
+      "@/styles/*": ["styles/*"],
+      "@/providers/*": ["providers/*"]
     }
   }
 }
