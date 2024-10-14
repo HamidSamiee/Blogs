@@ -1,12 +1,12 @@
 import PostList from "@/app/blogs/_/components/PostList"
-import Spinner from "@/ui/Spinner"
 import { Suspense } from "react"
+import Loading from "../Loading"
 
 
 const BlogsPage = () => {
   return (
     <div className="">
-      <Suspense fallback={<Spinner />}>
+      <Suspense fallback={<Loading />}>
         <PostList />
       </Suspense>
         

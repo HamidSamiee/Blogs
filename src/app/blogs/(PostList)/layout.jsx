@@ -1,4 +1,4 @@
-import CategoryList from "./_/components/CategoryList"
+import CategoryList from "@/app/blogs/_/components/CategoryList"
 
 const layout = ({children}) => {
   return (
