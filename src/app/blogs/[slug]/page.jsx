@@ -1,19 +1,22 @@
 
 // import http from '@/services/httpServices';
+import { getPostBySlug } from '@/services/postServices';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import React from 'react'
 
+export async function generateMetadata({params}){
+const post = await getPostBySlug(params.slug);
+return{
+  title:`پست ${post.title}`
+}
+}
+
 const SingleBlog = async ({params}) => {
 
-  // const res = await http.get(`${process.env.NEXT_PUBLIC_BASE_URL}/post/slug/${params.slug}` );
-  // const {data:{data}}=res;
-  //  const {post}=data || {};
- const res = await fetch( `${process.env.NEXT_PUBLIC_BASE_URL}/post/slug/${params.slug}` );
-    const { data:{post} } = await res.json();
-    
-
-
+  const post = await getPostBySlug(params.slug)
+//  const res = await fetch( `${process.env.NEXT_PUBLIC_BASE_URL}/post/slug/${params.slug}` );
+//     const { data:{post} } = await res.json();
 // console.log(post);
 
   if(!post) return notFound()
