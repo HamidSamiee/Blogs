@@ -8,7 +8,7 @@
         const accessToken = req.cookies.get("accessToken");
         const refreshToken = req.cookies.get("refreshToken");
 
-        console.log(accessToken,refreshToken)
+        // console.log(accessToken,refreshToken)
 
         const options = {
           method: "GET",
@@ -24,8 +24,8 @@
           .then((res) => res.data);
         const { user } = data || {};
 
-        console.log(data)
-        console.log(user)
+        // console.log(data)
+        // console.log(user)
 
         return user;
     }

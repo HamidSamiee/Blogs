@@ -1,3 +1,4 @@
+import { toPersianDigits } from "@/utils/toPersianDigits";
 import {
   UserGroupIcon,
   ChatBubbleBottomCenterTextIcon,
@@ -22,7 +23,7 @@ export function Card({ title, value, type }) {
       <p
         className={`truncate rounded-xl bg-secondary-0 px-4 py-8 text-center text-2xl text-secondary-500`}
       >
-        {value}
+        {toPersianDigits(value)}
       </p>
     </div>
   );

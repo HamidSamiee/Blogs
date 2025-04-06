@@ -8,7 +8,8 @@ import { cookies } from "next/headers";
 
 export async function fetchCardData() {
   const cookieStore = cookies();
-  const options = setCookiesOnReq(cookieStore);
+  const options = await setCookiesOnReq(cookieStore);
+  // console.log(options)
   try {
     const data = await Promise.all([
       getAllUsersApi(options),
@@ -16,7 +17,7 @@ export async function fetchCardData() {
       getAllCommentsApi(options),
     ]);
 
-    console.log(data[0],data[1],data[2])
+    // console.log(data[0],data[1],data[2])
     const numberOfUsers = Number(data[0].users.length ?? "0");
     const numberOfPosts = Number(data[1].posts.length ?? "0");
     const numberOfComments = Number(data[2].commentsCount ?? "0");
