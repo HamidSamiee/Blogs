@@ -1,3 +1,5 @@
+"use client"
+import { useAuth } from "@/context/AuthContext";
 import NavLink from "./NavLink";
 
 const navLinks = [
@@ -15,8 +17,13 @@ const navLinks = [
 
 const Header = () => {
 
+  const {user,isLoading} = useAuth();
+// console.log(user,isLoading)
+
   return (
-    <header className="z-10 shadow-md bg-inherit mb-10 sticky top-0 transition-all duration-200 border-b border-b-secondary-300">
+    <header className={`z-10 shadow-md bg-inherit mb-10 sticky top-0 transition-all duration-200 border-b border-b-secondary-300 
+      ${isLoading ? "opacity-70 blur-sm" : "opacity-100 blur-0"}
+    `}>
       <nav className="container xl:max-w-screen-xl ">
           <ul className="flex items-center justify-between py-2 text-secondary-400">
             <div className="flex items-center gap-x-10">
@@ -32,9 +39,13 @@ const Header = () => {
                   })
                 }
             </div>
-            <li className="">
-                ورود
-            </li>
+            {
+              user ?(
+                <NavLink path="/profile">پروفایل</NavLink>
+              ):(
+                <NavLink path="/signIn">ورود</NavLink>
+              )
+            }
           </ul>
       </nav>
     </header>

@@ -9,6 +9,7 @@ const RHF_TextField = ({
     register,
     errors,
     validationSchima={},
+    className,
     ...rest
 }) => {
 
@@ -33,7 +34,7 @@ const RHF_TextField = ({
                 textField__input ${
                     dir === "ltr" ? "text-left" : "text-right"
                 }
-            `} 
+            ${className}`} 
         />
         {
             errors && errors[name] && (

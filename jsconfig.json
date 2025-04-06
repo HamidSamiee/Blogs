@@ -12,6 +12,7 @@
       "@/services/*": ["services/*"],
       "@/hooks/*": ["hooks/*"],
       "@/public/*": ["./public/*"],
+      "@/ui/*": ["./ui/*"],
       "@/styles/*": ["styles/*"],
       "@/providers/*": ["providers/*"]
     }

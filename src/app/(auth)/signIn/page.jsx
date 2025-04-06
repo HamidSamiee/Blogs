@@ -7,6 +7,8 @@ import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
 import Link from 'next/link'
 import { useAuth } from '@/context/AuthContext'
+import Spinner from '@/ui/Spinner'
+import SpinnerMini from '@/ui/SpinnerMini'
 
 // export const metadata={
 //     title:"ثبت نام",
@@ -24,7 +26,7 @@ const SignIn = () => {
     const {
         register,
         handleSubmit,
-        formState: { errors },
+        formState: { errors , isLoading },
       } = useForm({
         resolver:yupResolver(schema),
         mode:"onTouched",
@@ -58,9 +60,14 @@ const SignIn = () => {
                 isRequired
                 errors={errors}
             />
-            <Button varient="primary" type="submit" className="w-full" >
-                تایید 
-            </Button>
+            {
+              isLoading ? 
+                <SpinnerMini />
+              :
+                <Button varient="primary" type="submit" className="w-full" >
+                    تایید 
+                </Button>  
+            }
         </form>
         <Link href="/signUp" className='text-secondary-500 mt-6 text-center' >
             ثبت نام

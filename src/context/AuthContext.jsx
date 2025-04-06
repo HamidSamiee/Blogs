@@ -1,8 +1,8 @@
 "use client"
 
-import { signInApi, signUpApi } from '@/services/authServices';
+import { getUserApi, singinApi, signupApi } from '@/services/authServices';
 import { useRouter } from 'next/navigation';
-import { createContext, useContext, useReducer } from 'react' 
+import { createContext, useContext, useEffect, useReducer } from 'react' 
 import toast from 'react-hot-toast';
 
 const AuthContext = createContext();
@@ -11,7 +11,7 @@ const AuthContext = createContext();
 const initialState={
     user:null,
     isAuthenticated:false,
-    isLoading:true,
+    isLoading:false,
     error:null,
 }
 
@@ -25,7 +25,7 @@ const authReducer=(state,action)=>{
         case "rejected":
         return {
             ...state,
-            isLoading : true,
+            isLoading : false,
             error : action.payload,
         }
         case "signin":
@@ -35,9 +35,13 @@ const authReducer=(state,action)=>{
         }
         case "signup":
         return {
-            ...state,
-            isLoading:false,
-            user: action.payload,
+            isAuthenticated:true,
+            user : action.payload,
+            }
+        case "user/loaded":
+        return {
+            isAuthenticated:true,
+            user : action.payload,
             }
         default:
             return state;
@@ -52,10 +56,10 @@ const AuthProvider=({children})=>{
     const signUp = async (values)=>{
         dispatch({type:"loading"})
         try {
-            const {user,message} = await signUpApi(values); 
+            const {data:{user,message}} = await signupApi(values); 
             dispatch({type:"signup",payload:user});
             toast.success(message);
-            router.push("/");
+            router.push("/profile");
         } catch (error) {
             const errorMsg = error?.response?.data?.message;
             dispatch({type:"rejected",payload:errorMsg});
@@ -66,7 +70,7 @@ const AuthProvider=({children})=>{
     const signIn = async (values)=>{
         dispatch({type:"loading"})
         try {
-            const {user,message} = await signInApi(values); 
+            const {data:{user,message}} = await singinApi(values);
             dispatch({type:"signin",payload:user});
             toast.success(message);
             router.push("/");
@@ -77,8 +81,30 @@ const AuthProvider=({children})=>{
         }
     }
 
+    async function getUser() {
+        dispatch({ type: "loading" });
+        try {
+          // await new Promise((resolve, reject) =>
+          //   setTimeout(() => resolve("ddd"), 4000)
+          // );
+          const {data: { user }} = await getUserApi();
+          dispatch({ type: "user/loaded", payload: user });
+        } catch (err) {
+          const error = err?.response?.data?.message;
+          dispatch({ type: "rejected", payload: error });
+        }
+      }
+
+    useEffect(()=>{
+        async function fetchData() {
+            await getUser()
+        }
+        fetchData();
+    },[])
+
+
 return(
-    <AuthContext.Provider value={{user,isAuthenticated,isLoading,error,signIn,signUp}}>
+    <AuthContext.Provider value={{user,isAuthenticated,isLoading,error,getUser,signIn,signUp}}>
         {children}
     </AuthContext.Provider>
 )}

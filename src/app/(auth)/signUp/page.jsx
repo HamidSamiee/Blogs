@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form'
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
 import { useAuth } from '@/context/AuthContext'
+import SpinnerMini from '@/ui/SpinnerMini'
 
 // export const metadata={
 //     title:"ثبت نام",
@@ -25,13 +26,13 @@ const SignUp = () => {
     const {
         register,
         handleSubmit,
-        formState: { errors },
+        formState: { errors , isLoading },
       } = useForm({
         resolver:yupResolver(schema),
         mode:"onTouched",
       });
 
-      const {signUp}=useAuth();
+      const {signUp} = useAuth();
 
       const onSubmit=async(values)=>{
         signUp(values)
@@ -66,9 +67,14 @@ const SignUp = () => {
                 isRequired
                 errors={errors}
             />
-            <Button varient="primary" type="submit" className="w-full" >
-                ثبت نام
-            </Button>
+            {
+              isLoading ? 
+                <SpinnerMini />
+              :
+                <Button varient="primary" type="submit" className="w-full" >
+                    تایید 
+                </Button>  
+            }
         </form>
     </div>
   )
